@@ -15,7 +15,11 @@ spring:
       driver-class-name: org.postgresql.Driver
       check-process-definitions: false
       process-definition-location-prefix: classpath:/processes/
+      #项目启动没有表则创建
       database-schema-update: true
+      #相当于日志级别
+      history-level: activity
+      #执行流程email通知还没有配置
 
   jpa:
     properties:
