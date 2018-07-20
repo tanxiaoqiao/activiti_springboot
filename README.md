@@ -6,8 +6,8 @@
 
 
 #repositoryService 提供定义 部署api
-#runtimservice 流程管理控制
-#taskservice  任务管理，提醒，完成，创建等
-#identityservice 角色管理api
-#managementservie 
-#historysercie 历史数据管理
+ #runtimservice 流程管理控制
+ #taskservice  任务管理，提醒，完成，创建等
+ #identityservice 角色管理api
+ #managementservie 
+ #historysercie 历史数据管理
