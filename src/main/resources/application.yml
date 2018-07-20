@@ -15,7 +15,7 @@ spring:
       driver-class-name: org.postgresql.Driver
       check-process-definitions: false
       process-definition-location-prefix: classpath:/processes/
-      database-schema-update: false
+      database-schema-update: true
 
   jpa:
     properties:
