@@ -1,0 +1,26 @@
+spring:
+  datasource:
+     url: jdbc:postgresql://localhost:5432/test
+     username: postgres
+     password: 123456
+     dbcp2:
+       driver: org.apache.commons.dbcp2.BasicDataSource
+
+  activiti:
+      datasource:
+      url: jdbc:postgresql://localhost:5432
+      database: test
+      username: postgres
+      password: 123456
+      driver-class-name: org.postgresql.Driver
+      check-process-definitions: false
+      process-definition-location-prefix: classpath:/processes/
+
+  jpa:
+    properties:
+      hibernate:
+        temp:
+          use_jdbc_metadata_defaults: false
+
+server:
+  port: 7777
