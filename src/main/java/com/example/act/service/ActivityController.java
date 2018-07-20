@@ -3,7 +3,6 @@ package com.example.act.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @Author: Kris
@@ -11,8 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
  * @Date: 7/19/2018 3:18 PM
  */
 
-@RestController
-@RequestMapping("/test")
+//@RestController
+//@RequestMapping("/test")
 public class ActivityController {
 
     @Autowired

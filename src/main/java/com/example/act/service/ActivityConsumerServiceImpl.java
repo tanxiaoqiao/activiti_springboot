@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 
-@Service
+//@Service
 public class ActivityConsumerServiceImpl {
 
     @Autowired
