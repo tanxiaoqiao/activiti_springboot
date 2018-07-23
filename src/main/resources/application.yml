@@ -19,6 +19,8 @@ spring:
       database-schema-update: true
       #相当于日志级别
       history-level: activity
+      #不生成流程图png
+      createDiagramOnDeploy: false
       #执行流程email通知还没有配置
 
   jpa:

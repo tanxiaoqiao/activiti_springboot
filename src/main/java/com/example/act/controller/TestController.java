@@ -31,5 +31,33 @@ public class TestController {
         actTest.third();
     }
 
+    @RequestMapping("/four")
+    public void four() {
+        actTest.four();
+    }
 
+
+    @RequestMapping("/five")
+    public void five() {
+        actTest.five();
+    }
+
+
+    @RequestMapping("/seven")
+    public void seven() {
+        actTest.seven();
+    }
+
+
+
+    @RequestMapping("/eight")
+    public void eight() {
+        actTest.eight();
+    }
+
+
+    @RequestMapping("/nine")
+    public void nine() {
+        actTest.nine();
+    }
 }
