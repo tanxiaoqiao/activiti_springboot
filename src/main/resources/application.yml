@@ -21,6 +21,8 @@ spring:
       history-level: activity
       #不生成流程图png
       createDiagramOnDeploy: false
+      #异步启动
+      async-executor-activate: true
       #执行流程email通知还没有配置
 
   jpa:

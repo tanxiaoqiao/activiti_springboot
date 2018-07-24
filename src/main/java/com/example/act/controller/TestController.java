@@ -21,6 +21,7 @@ public class TestController {
     public void first() {
         actTest.first();
     }
+
     @RequestMapping("/second")
     public void secount() {
         actTest.getList();
@@ -49,7 +50,6 @@ public class TestController {
     }
 
 
-
     @RequestMapping("/eight")
     public void eight() {
         actTest.eight();
@@ -59,5 +59,34 @@ public class TestController {
     @RequestMapping("/nine")
     public void nine() {
         actTest.nine();
+    }
+
+    @RequestMapping("/ten")
+    public void ten() {
+        actTest.ten();
+    }
+
+
+    @RequestMapping("/eleven")
+    public void eleven() {
+        actTest.eleven();
+    }
+
+
+    @RequestMapping("/twelve")
+    public void twelve() {
+        actTest.eleven();
+    }
+
+
+    @RequestMapping("/othree")
+    public void othree() throws InterruptedException {
+        actTest.othree();
+    }
+
+
+    @RequestMapping("/ofour")
+    public void ofour() throws InterruptedException {
+        actTest.ofour();
     }
 }

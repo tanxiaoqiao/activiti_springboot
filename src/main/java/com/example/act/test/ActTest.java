@@ -34,6 +34,9 @@ public class ActTest {
     @Autowired
     RepositoryService repositoryService;
 
+    @Autowired
+    ManagementService managementService;
+
     public void first() {
         IdentityService is = processEngine.getIdentityService();
         for (int i = 0; i < 10; i++) {
@@ -129,16 +132,16 @@ public class ActTest {
 
     //多分支流
     public void eight() {
-        //部署流程
+        //todo 部署流程
         Deployment deploy = repositoryService.createDeployment().addClasspathResource("processes/multi.bpmn").deploy();
-        //流程定义
+        //todo 流程定义
         ProcessDefinition pd = repositoryService.createProcessDefinitionQuery().deploymentId(deploy.getId()).singleResult();
-        //启动流程实例
+        //todo 启动流程实例
         ProcessInstance pi = runtimeService.startProcessInstanceById(pd.getId());
         System.out.println(pi.getId());
     }
 
-    //多分支流
+    //多分支流，有receive Task的时候，调用trigger往下执行
     public void nine() {
         //部署流程
         Deployment deploy = repositoryService.createDeployment().addClasspathResource("processes/nine.bpmn").deploy();
@@ -150,12 +153,90 @@ public class ActTest {
         Execution exe = runtimeService.createExecutionQuery()
                 .processInstanceId(pi.getId()).onlyChildExecutions()
                 .singleResult();
-        System.out.println(exe.getId()+"++++"+exe.getActivityId());
-        //执行流往下走
+        System.out.println(exe.getId() + "++++" + exe.getActivityId());
+        //todo 执行流往下走
         runtimeService.trigger(exe.getId());
         exe = runtimeService.createExecutionQuery()
                 .processInstanceId(pi.getId()).onlyChildExecutions().singleResult();
         System.out.println("当前" + exe.getActivityId());
+    }
+
+
+    //捕获事件  流程停在此处等待外部发送信号，流程才会继续往下走  注意时间标签signal要自己添加在bpmn文件
+    //抛出事件 无需外部通知，流程继续往下走
+    public void ten() {
+        //部署流程
+        Deployment deploy = repositoryService.createDeployment().addClasspathResource("processes/ten.bpmn").deploy();
+        //流程定义
+        ProcessDefinition pd = repositoryService.createProcessDefinitionQuery().deploymentId(deploy.getId()).singleResult();
+        //启动流程实例
+        ProcessInstance pi = runtimeService.startProcessInstanceById(pd.getId());
+
+        Execution exe = runtimeService.createExecutionQuery()
+                .processInstanceId(pi.getId()).onlyChildExecutions()
+                .singleResult();
+        System.out.println(exe.getId() + "++++" + exe.getActivityId());
+        //todo 执行触发通知，signal标签里面的id
+        runtimeService.signalEventReceived("test");
+        //消息事件的通知
+        // runtimeService.messageEventReceived("test",exe.getId());
+        exe = runtimeService.createExecutionQuery().processInstanceId(pi.getId()).onlyChildExecutions().singleResult();
+        //todo 已经到下一个节点
+        System.out.println(exe.getId() + "++++" + exe.getActivityId());
+
+    }
+
+    //ru_job表一般事件 ru_execution看到processInstance   主要看bpmn
+    public void eleven() {
+        //部署流程
+        Deployment deploy = repositoryService.createDeployment().addClasspathResource("processes/eleven.bpmn").deploy();
+        //流程定义
+        ProcessDefinition pd = repositoryService.createProcessDefinitionQuery().deploymentId(deploy.getId()).singleResult();
+        //启动流程实例
+        ProcessInstance pi = runtimeService.startProcessInstanceById(pd.getId());
+        System.out.println(pi.getId());
+
+    }
+
+    //定时任务 主要看bpmn
+    public void twelve() {
+        //部署流程
+        Deployment deploy = repositoryService.createDeployment().addClasspathResource("processes/twelve.bpmn").deploy();
+        //流程定义
+        ProcessDefinition pd = repositoryService.createProcessDefinitionQuery().deploymentId(deploy.getId()).singleResult();
+        //启动流程实例
+        ProcessInstance pi = runtimeService.startProcessInstanceById(pd.getId());
+        System.out.println(pi.getId());
+
+    }
+
+    //中止任务 主要看bpmn
+    public void othree() throws InterruptedException {
+        //部署流程
+        Deployment deploy = repositoryService.createDeployment().addClasspathResource("processes/twelve.bpmn").deploy();
+        //流程定义
+        ProcessDefinition pd = repositoryService.createProcessDefinitionQuery().deploymentId(deploy.getId()).singleResult();
+        //启动流程实例
+        ProcessInstance pi = runtimeService.startProcessInstanceById(pd.getId());
+        System.out.println(pi.getId());
+        Thread.sleep(10000);
+        //中止
+        runtimeService.suspendProcessInstanceById(pi.getId());
+        Thread.sleep(10000);
+        //再次启动
+        runtimeService.activateProcessInstanceById(pi.getId());
+        //todo job任务的查询都用managementService
+    }
+
+    //定时任务
+    public void ofour() throws InterruptedException {
+        //部署流程
+        Deployment deploy = repositoryService.createDeployment().addClasspathResource("view/定时事件.bpmn").deploy();
+        long count = runtimeService.createProcessInstanceQuery().count();
+        System.out.println("启动前流程数量" + count);
+        Thread.sleep(700000);
+        count = runtimeService.createProcessInstanceQuery().count();
+        System.out.println("启动HOU流程数量" + count);
     }
 
 
