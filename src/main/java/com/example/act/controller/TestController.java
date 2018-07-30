@@ -89,4 +89,52 @@ public class TestController {
     public void ofour() throws InterruptedException {
         actTest.ofour();
     }
+
+    @RequestMapping("/a")
+    public void a() throws InterruptedException {
+        actTest.a();
+    }
+
+    @RequestMapping("/b")
+    public void b() throws InterruptedException {
+        actTest.b();
+    }
+    @RequestMapping("/c")
+    public void c() throws InterruptedException {
+        actTest.c();
+    }
+    @RequestMapping("/d")
+    public void d() throws InterruptedException {
+        actTest.d();
+    }
+    @RequestMapping("/e")
+    public void e() throws InterruptedException {
+        actTest.e();
+    }
+    @RequestMapping("/f")
+    public void f() throws InterruptedException {
+        actTest.f();
+    }
+    @RequestMapping("/g")
+    public void g() throws InterruptedException {
+        actTest.g();
+    }
+    @RequestMapping("/h")
+    public void h() throws InterruptedException {
+        actTest.h();
+    }
+
+    @RequestMapping("/i")
+    public void i() throws InterruptedException {
+        actTest.i();
+    }
+    @RequestMapping("/j")
+    public void j() throws InterruptedException {
+        actTest.j();
+    }
+
+
+
+
+
 }

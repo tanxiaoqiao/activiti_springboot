@@ -240,4 +240,72 @@ public class ActTest {
     }
 
 
+    //错误开始事件
+    public void  a(){
+        //部署流程
+        Deployment deploy = repositoryService.createDeployment().addClasspathResource("processes/a.bpmn").deploy();
+        ProcessDefinition pd = repositoryService.createProcessDefinitionQuery().deploymentId(deploy.getId()).singleResult();
+        //启动流程实例
+        ProcessInstance pi = runtimeService.startProcessInstanceById(pd.getId());
+
+
+
+    }
+
+    //错误结束时间
+    public void  b(){
+        //部署流程
+        Deployment deploy = repositoryService.createDeployment().addClasspathResource("processes/b.bpmn").deploy();
+        ProcessDefinition pd = repositoryService.createProcessDefinitionQuery().deploymentId(deploy.getId()).singleResult();
+        //启动流程实例
+        ProcessInstance pi = runtimeService.startProcessInstanceById(pd.getId());
+
+    }
+
+    //终止结束事件
+    public void  c(){
+        //部署流程
+        Deployment deploy = repositoryService.createDeployment().addClasspathResource("processes/c.bpmn").deploy();
+        ProcessDefinition pd = repositoryService.createProcessDefinitionQuery().deploymentId(deploy.getId()).singleResult();
+        //启动流程实例
+        ProcessInstance pi = runtimeService.startProcessInstanceById(pd.getId());
+        long count = runtimeService.createExecutionQuery().processInstanceId(pi.getId()).count();
+        System.out.println("当前任务数量："+count);
+
+        List<Task> list = taskService.createTaskQuery().processInstanceId(pi.getId()).list();
+        list.forEach(l->{
+            if (l.getName().equals("UserTask1")){
+                taskService.complete(l.getId());
+            }
+        });
+
+        System.out.println("==============end");
+        ProcessInstance pid = runtimeService.createProcessInstanceQuery().processInstanceId(pi.getId()).singleResult();
+        System.out.println("当前还有事件数量："+pid);
+
+    }
+    public void  d(){
+
+    }
+    public void  e(){
+
+    }
+    public void  f(){
+
+    }
+    public void  g(){
+
+    }
+    public void  h(){
+
+    }
+    public void  i(){
+
+    }
+    public void  j(){
+
+    }
+
+
+
 }

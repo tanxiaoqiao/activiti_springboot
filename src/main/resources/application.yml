@@ -7,12 +7,6 @@ spring:
        driver: org.apache.commons.dbcp2.BasicDataSource
 
   activiti:
-      datasource:
-      url: jdbc:postgresql://localhost:5432
-      database: test
-      username: postgres
-      password: 123456
-      driver-class-name: org.postgresql.Driver
       check-process-definitions: false
       process-definition-location-prefix: classpath:/processes/
       #项目启动没有表则创建
