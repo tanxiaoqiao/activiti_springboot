@@ -241,7 +241,7 @@ public class ActTest {
 
 
     //错误开始事件
-    public void  a(){
+    public void a() {
         //部署流程
         Deployment deploy = repositoryService.createDeployment().addClasspathResource("processes/a.bpmn").deploy();
         ProcessDefinition pd = repositoryService.createProcessDefinitionQuery().deploymentId(deploy.getId()).singleResult();
@@ -249,11 +249,10 @@ public class ActTest {
         ProcessInstance pi = runtimeService.startProcessInstanceById(pd.getId());
 
 
-
     }
 
     //错误结束时间
-    public void  b(){
+    public void b() {
         //部署流程
         Deployment deploy = repositoryService.createDeployment().addClasspathResource("processes/b.bpmn").deploy();
         ProcessDefinition pd = repositoryService.createProcessDefinitionQuery().deploymentId(deploy.getId()).singleResult();
@@ -263,49 +262,114 @@ public class ActTest {
     }
 
     //终止结束事件
-    public void  c(){
+    public void c() {
         //部署流程
         Deployment deploy = repositoryService.createDeployment().addClasspathResource("processes/c.bpmn").deploy();
         ProcessDefinition pd = repositoryService.createProcessDefinitionQuery().deploymentId(deploy.getId()).singleResult();
         //启动流程实例
         ProcessInstance pi = runtimeService.startProcessInstanceById(pd.getId());
         long count = runtimeService.createExecutionQuery().processInstanceId(pi.getId()).count();
-        System.out.println("当前任务数量："+count);
+        System.out.println("当前任务数量：" + count);
 
         List<Task> list = taskService.createTaskQuery().processInstanceId(pi.getId()).list();
-        list.forEach(l->{
-            if (l.getName().equals("UserTask1")){
+        list.forEach(l -> {
+            if (l.getName().equals("UserTask1")) {
                 taskService.complete(l.getId());
             }
         });
 
         System.out.println("==============end");
         ProcessInstance pid = runtimeService.createProcessInstanceQuery().processInstanceId(pi.getId()).singleResult();
-        System.out.println("当前还有事件数量："+pid);
-
-    }
-    public void  d(){
-
-    }
-    public void  e(){
-
-    }
-    public void  f(){
-
-    }
-    public void  g(){
-
-    }
-    public void  h(){
-
-    }
-    public void  i(){
-
-    }
-    public void  j(){
+        System.out.println("当前还有事件数量：" + pid);
 
     }
 
+
+    //任务处理超时然后转移任务
+    public void d() throws InterruptedException {
+        //部署流程
+        Deployment deploy = repositoryService.createDeployment().addClasspathResource("processes/d.bpmn").deploy();
+        ProcessDefinition pd = repositoryService.createProcessDefinitionQuery().deploymentId(deploy.getId()).singleResult();
+        //启动流程实例
+        ProcessInstance pi = runtimeService.startProcessInstanceById(pd.getId());
+        long count = runtimeService.createExecutionQuery().processInstanceId(pi.getId()).count();
+        System.out.println("当前任务数量：" + count);
+        Task task = taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult();
+        System.out.println("currnt" + task.getName());
+        Thread.sleep(70000);
+
+        Task task1 = taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult();
+        System.out.println("after" + task1.getName());
+
+
+    }
+
+    //流程回转
+    public void e() {
+        Deployment deploy = repositoryService.createDeployment().addClasspathResource("processes/e.bpmn").deploy();
+        ProcessDefinition pd = repositoryService.createProcessDefinitionQuery().deploymentId(deploy.getId()).singleResult();
+        //启动流程实例
+        ProcessInstance pi = runtimeService.startProcessInstanceById(pd.getId());
+
+        Task task = taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult();
+        taskService.complete(task.getId());
+        Task task2 = taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult();
+        System.out.println("current:" + task2.getName());
+        runtimeService.signalEventReceived("megsssss");
+        List<Task> list = taskService.createTaskQuery().processInstanceId(pi.getId()).list();
+        list.forEach(l -> {
+            System.out.println(l.getProcessInstanceId() + l.getName());
+        });
+
+    }
+
+    //中间消息抛出异常
+
+    public void f() {
+
+        Deployment deploy = repositoryService.createDeployment().addClasspathResource("processes/f.bpmn").deploy();
+        ProcessDefinition pd = repositoryService.createProcessDefinitionQuery().deploymentId(deploy.getId()).singleResult();
+        //启动流程实例
+        ProcessInstance pi = runtimeService.startProcessInstanceById(pd.getId());
+
+        Task task = taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult();
+        System.out.println("current:" + task.getName());
+        taskService.complete(task.getId());
+        List<Task> list = taskService.createTaskQuery().processInstanceId(pi.getId()).list();
+        list.forEach(l -> {
+            System.out.println(l.getProcessInstanceId() + l.getName());
+        });
+
+    }
+
+
+    //补偿事件
+    public void g() {
+        Deployment deploy = repositoryService.createDeployment().addClasspathResource("processes/iii.bpmn").deploy();
+        ProcessDefinition pd = repositoryService.createProcessDefinitionQuery().deploymentId(deploy.getId()).singleResult();
+        //启动流程实例
+        ProcessInstance pi = runtimeService.startProcessInstanceById(pd.getId());
+
+        Task task = taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult();
+        taskService.complete(task.getId());
+        List<Task> list = taskService.createTaskQuery().processInstanceId(pi.getId()).list();
+        list.forEach(l -> {
+            System.out.println(l.getProcessInstanceId() + l.getName());
+        });
+
+    }
+
+    public void h() {
+
+    }
+
+    public void i() {
+
+    }
+
+    public void j() {
+
+    }
 
 
 }
