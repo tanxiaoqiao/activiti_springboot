@@ -345,7 +345,7 @@ public class ActTest {
 
     //补偿事件
     public void g() {
-        Deployment deploy = repositoryService.createDeployment().addClasspathResource("processes/iii.bpmn").deploy();
+        Deployment deploy = repositoryService.createDeployment().addClasspathResource("processes/g.bpmn").deploy();
         ProcessDefinition pd = repositoryService.createProcessDefinitionQuery().deploymentId(deploy.getId()).singleResult();
         //启动流程实例
         ProcessInstance pi = runtimeService.startProcessInstanceById(pd.getId());
